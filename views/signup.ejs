@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Sign Up To URPARTY</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+	<link rel="icon" type="image/ico" href="../assets/uplogorichtignice.ico"/>
+	<link href="https://fonts.googleapis.com/css?family=Anton|Courgette|Dosis" rel="stylesheet">
+	<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+	<link rel="stylesheet" type="text/css" href="../assets/urparty-style0.0.1.css">
+	<script
+	src="https://code.jquery.com/jquery-3.3.1.min.js"
+	integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+	crossorigin="anonymous"></script>
+	<script
+	src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"
+	integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU="
+	crossorigin="anonymous"></script>
+
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$("#password2").keyup(validate);
+		});
+
+
+		function validate() {
+			var password1 = $("#password1").val();
+			var password2 = $("#password2").val();
+
+			if(password1 == password2) {
+				$("#password2").css({"background": "rgba(71, 255, 71, 0.2)"});
+				$("#signup").prop("disabled", false);
+			}else {
+				$("#password2").css({"backgroundColor": "rgba(255, 71, 71, 0.2)"});
+				$("#signup").prop("disabled", true);
+			}
+		}
+
+
+
+	</script>
+	<script src="../assets/info-toggle.js" charset="utf-8"></script>
+</head>
+<body>
+	<header class="header">
+		<a href="/"><i class="fa fa-long-arrow-left" aria-hidden="true"> Go Back</i></a>
+	</header>
+
+	<section class="frm-mid">
+		<img id="landing-logo-small" src="../assets/urpartylogo1.svg">
+		<form  action="/auth/signup" method="post">
+			<br>
+  			<input class="frm-ipt" type="text" name="firstname" placeholder="First Name">
+  			<br>
+  			<input class="frm-ipt" type="text" name="lastname" placeholder="Last Name">
+  			<br>
+				<input class="frm-ipt" type="text" name="username" placeholder="Username">
+  			<br>
+  			<input class="frm-ipt" type="email" name="email" placeholder="E-Mail">
+  			<br>
+  			<input class="frm-ipt" id="password1" type="password" name="password" placeholder="Password">
+  			<br>
+  			<input class="frm-ipt" id="password2" type="password" name="password2" placeholder="Repeat Password">
+  			<br><br>
+  			<input id="signup" class="btn-clicka btn-frm" type="submit" value="SIGNUP">
+		</form>
+	</section>
+
+	<footer>
+		<button id="info-button">i</button>
+	</footer>
+	<div id="dialog-info">
+		<h3>Welcome to urparty BETA.</h4>
+		<br>
+		<h4>Need help?</h3>
+		<p>Write an email to: support@urparty.one</p>
+		<br>
+		<p>This website was made by:</p>
+		<p>Philip Niebecker</p>
+		<p>Jonas Wiegmann</p>
+	</div>
+</body>
+</html>

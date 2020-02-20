@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <link rel="icon" type="image/ico" href="../assets/uplogorichtignice.ico"/>
+    <title>urparty Profile</title>
+    <link href="https://fonts.googleapis.com/css?family=Anton|Courgette|Dosis" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+    <link rel="stylesheet" href="./assets/profile-style01.css">
+    <script
+    src="https://code.jquery.com/jquery-3.3.1.min.js"
+    integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+    crossorigin="anonymous"></script>
+    <script
+    src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"
+    integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU="
+    crossorigin="anonymous"></script>
+
+  	<script type="text/javascript">
+  		$(document).ready(function() {
+  			$("#password2").keyup(validate);
+
+        $('#delete-btn-function').on('click', function(e){
+          console.log("pressed");
+           $.ajax({
+           type:'DELETE',
+           url: '/profile',
+           success: function(response){
+             alert('Deleting Profile.');
+             window.location.href='/';
+           },
+           error: function(err){
+             console.log(err);
+           }
+         });
+  		});
+
+
+  		function validate() {
+  			var password1 = $("#password1").val();
+  			var password2 = $("#password2").val();
+
+  			if(password1 == password2) {
+  				$("#password2").css({"background": "rgba(71, 255, 71, 0.2)"});
+  			}else {
+  				$("#password2").css({"backgroundColor": "rgba(255, 71, 71, 0.2)"});
+  			}
+  		}
+ });
+
+
+  	</script>
+    <script src="../assets/info-toggle.js" charset="utf-8"></script>
+  </head>
+  <body>
+    <div class="grid">
+      <!-- Navbar  -->
+      <div class="nav">
+          <ul class="nav-grid">
+            <li class="left-grid">
+              <a href="/party/main">
+                <img id="landing-logo-super-small" src="./assets/urpartyfinal.svg" alt="">
+              </a>
+            </li>
+            <li class="center-grid">
+              <a href="/party/create">
+                <button type="button" name="button" class="save-button left-nav-btn">Create Party</button>
+              </a>
+            </li>
+            <li class="center-grid">
+              <a href="/party/join">
+                <button type="button" name="button" class="save-button right-nav-btn">Join Party</button>
+              </a>
+            </li>
+            <li class="right-grid">
+              <a href="/auth/logout">
+                <button type="button" name="button" class="save-button logout-nav-btn">Logout</button>
+              </a>
+            </li>
+          </ul>
+      </div>
+      <!-- Main -->
+      <div class="main">
+          <div class="profileCard">
+            <h2>Hello <%= user.username %></h2>
+            <h4>Here you can change your profile or delete it completely:</h4>
+            <br>
+            <form class="form-grid" action="/profile">
+              <h4 class="form-h4">First Name: </h4><input class="frm-ipt" type="text" name="firstName" value="<%= user.firstName %>">
+              <h4 class="form-h4">Last Name: </h4><input class="frm-ipt" type="text" name="lastName" value="<%= user.lastName %>">
+              <h4 class="form-h4">Username: </h4><input class="frm-ipt" type="text" name="username" value="<%= user.username %>">
+              <h4 class="form-h4">E-Mail: </h4><input class="frm-ipt" type="email" name="email" value="<%= user.email %>">
+              <h4 class="form-h4">Picture URL: </h4><input class="frm-ipt" type="url" name="profileImg" value="<%= user.profileImg %>">
+              <% if(user.facebookId == undefined && user.googleId == undefined){ %>
+              <h4 class="form-h4">Password: </h4><input class="frm-ipt" id="password1" type="password" name="password" placeholde="">
+              <h4 class="form-h4">Repeat Password: </h4><input class="frm-ipt" id="password2" type="password" name="password2" placeholder="">
+              <% } %>
+              <button type="submit" name="save-button" class="save-button save-change" value="save" formmethod="post"><i class="far fa-save"></i> Save Changes.</button>
+              <button id="delete-btn-function" type="button" name="delete" class="save-button delete-btn"><i class="far fa-trash-alt" formmethod="delete"></i> Delete Profile.</button>
+            </form>
+          </div>
+      </div>
+      <!-- Footer -->
+      <div class="foot">
+        <footer>
+      		<button id="info-button">i</button>
+      	</footer>
+      </div>
+      <div id="dialog-info">
+    		<h3>Welcome to urparty BETA.</h4>
+    		<br>
+    		<h4>Need help?</h3>
+    		<p>Write an email to: support@urparty.one</p>
+    		<br>
+    		<p>This website was made by:</p>
+    		<p>Philip Niebecker</p>
+    		<p>Jonas Wiegmann</p>
+    	</div>
+    </div>
+  </body>
+</html>

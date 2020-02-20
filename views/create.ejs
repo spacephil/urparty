@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Create urparty</title>
+    <link rel="icon" type="image/ico" href="../assets/uplogorichtignice.ico"/>
+    <link href="https://fonts.googleapis.com/css?family=Anton|Courgette|Dosis" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+    <link rel="stylesheet" href="../assets/profile-style01.css">
+    <script
+    src="https://code.jquery.com/jquery-3.3.1.min.js"
+    integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+    crossorigin="anonymous"></script>
+    <script
+    src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"
+    integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU="
+    crossorigin="anonymous"></script>
+    <script src="../assets/profilescript.js" charset="utf-8"></script>
+    <script src="../assets/info-toggle.js" charset="utf-8"></script>
+  </head>
+  <body>
+    <div class="grid">
+      <!-- Navbar  -->
+      <div class="nav">
+          <ul class="nav-grid">
+            <li class="left-grid">
+              <a href="/party/main">
+                <img id="landing-logo-super-small" src="../assets/urpartyfinal.svg" alt="">
+              </a>
+            </li>
+            <li class="center-grid">
+              <a href="/party/create">
+                <button type="button" name="button" class="save-button left-nav-btn">Create Party</button>
+              </a>
+            </li>
+            <li class="center-grid">
+              <a href="/party/join">
+                <button type="button" name="button" class="save-button right-nav-btn">Join Party</button>
+              </a>
+            </li>
+            <li class="right-grid">
+              <a href="/profile">
+                <% if(user.profileImg == undefined || user.profileImg == ""){ %>
+                  <i class="fas fa-user-circle"></i>
+                <% } else{ %>
+                  <img class="nav-profileImg" src="<%= user.profileImg %>" alt="Profile Image">
+                <% } %>
+              </a>
+            </li>
+          </ul>
+      </div>
+
+      <!-- Main -->
+      <div class="create-tabs">
+        <form class="c-tabs" action="/party/createParty">
+          <div id="c-info" class="info createBasic">
+            <h4>info</h4>
+          </div>
+          <div id="f-info" class="createForms">
+            <div class="form-grid">
+              <h5 class="listNote">
+                <i>Here you write down the details of your party.</i>
+              </h5>
+              <button type="button" id="fi-close" class="close-btn" name="button">Close</button>
+            	<h4 class="form-h4">Titel: </h4>
+              <input class="c-input frm-ipt" type="text" name="partyTitle" required>
+              <h4 class="form-h4">Party Password:</h4>
+              <input class="c-input frm-ipt" type="text" name="partyPassword" required>
+  						<h4 class="form-h4">Date: </h4>
+              <input class="c-input frm-ipt" type="date" name="date" required>
+  						<h4 class="form-h4">Start: </h4>
+              <input class="c-input frm-ipt" type="time" name="start">
+  					   <h4 class="form-h4">Street: </h4>
+              <input class="c-input frm-ipt" type="text" name="street">
+  						<h4 class="form-h4">City: </h4>
+              <input class="c-input frm-ipt" type="text" name="city">
+  						<h4 class="form-h4">Occassion: </h4>
+              <input class="c-input frm-ipt" type="text" name="occassion">
+  						<h4 class="form-h4">Theme: </h4>
+              <input class="c-input frm-ipt" type="text" name="theme">
+  						<h4 class="form-h4">Entrence cost:</h4>
+              <input class="c-input frm-ipt" type="number" name="entrence">
+              <h4 class="form-h4">Picture-Link:</h4>
+              <input class="c-input frm-ipt" type="url" name="partyPictureLink">
+            </div>
+          </div>
+          <div id="c-food" class="food createBasic">
+            <h4>food</h4>
+          </div>
+          <div id="f-food" class="createForms">
+            <div class="form-grid2">
+              <h5 class="listNote">
+                <i>You can sort the items in each list, doubleclick to delete an item.<br>
+  							Add food to the list, so that later your guest can vote for food.<br>
+  							After the vote, you know how much you need to provide.</i>
+              </h5>
+              <button type="button" id="ff-close" class="close-btn" name="button">Close</button>
+              <div class="">
+                <input type="radio" name="foodOrigin" value="provide" checked>Provide food.
+              </div>
+              <div class="foodRadio2">
+                <input type="radio" name="foodOrigin" value="bring"> Let your guest bring food.
+              </div>
+  					  <div class="foodList1 foodList">
+                <h3 id="food-list1">What food are you going to provide?</h3>
+                <br><br>
+    						<input class="c-input" type="text" name="item1"/>
+    						<div id="btn-add1" class="btn-add">
+    							<i class="fa fa-plus" aria-hidden="true"></i>
+    						</div>
+    						<br/>
+    						<ul class="ul-itemList" id="List1"></ul>
+              </div>
+              <div class="foodList2 foodList">
+                <h3 id="food-list2">Do your guests have to bring food too?</h3>
+                <h5 class="listNote"><i>Leave blank if not.</i></h5>
+                <input class="c-input" type="text" name="item2"/>
+                <div id="btn-add2" class="btn-add">
+                  <i class="fa fa-plus" aria-hidden="true"></i>
+                </div>
+                <br/>
+                <ul class="ul-itemList" id="List2"></ul>
+              </div>
+            </div>
+          </div>
+          <div id="c-drinks" class="drinks createBasic">
+            <h4>drinks</h4>
+          </div>
+          <div id="f-drinks" class="createForms">
+            <div class="form-grid2">
+              <h5 class="listNote">
+                <i>You can sort the items in each list, doubleclick to delete an item.<br>
+  							Add drinks to the list, so that later your guest can vote for drinks.<br>
+  							After the vote, you know how much you need to provide.</i>
+              </h5>
+              <button type="button" id="fd-close" class="close-btn" name="button">Close</button>
+              <div>
+                <input type="radio" name="drinkOrigin" value="provide" checked>Provide drinks.
+              </div>
+              <div>
+                <input type="radio" name="drinkOrigin" value="bring"> Let your guest bring drinks.
+              </div>
+  					  <div class="foodList1 foodList">
+                <h3 id="drink-list1">What drinks are you going to provide?</h3>
+                <br><br>
+    						<input class="c-input" type="text" name="item3"/>
+    						<div id="btn-add3" class="btn-add">
+    							<i class="fa fa-plus" aria-hidden="true"></i>
+    						</div>
+    						<br/>
+    						<ul class="ul-itemList" id="List3"></ul>
+              </div>
+              <div class="foodList2 foodList">
+                <h3 id="drink-list2">Do your guests have to bring drinks too?</h3>
+                <h5 class="listNote"><i>Leave blank if not.</i></h5>
+                <input class="c-input" type="text" name="item4"/>
+                <div id="btn-add4" class="btn-add">
+                  <i class="fa fa-plus" aria-hidden="true"></i>
+                </div>
+                <br/>
+                <ul class="ul-itemList" id="List4"></ul>
+              </div>
+            </div>
+          </div>
+          <div id="c-guests" class="guests createBasic">
+            <h4>guests</h4>
+          </div>
+          <div id="f-guests" class="createForms">
+            <div class="form-grid2">
+              <h5 class="listNote">
+                <i>Here you can fill in every info for your guests.</i>
+              </h5>
+              <button type="button" id="fg-close" class="close-btn" name="button">Close</button>
+              <h4 class="guestInline">How many people is a guest allowed to bring with him?</h4>
+  						<input class="c-input" type="number" name="guestPlus" max="100">
+  						<h4 class="guestInline">Dresscode: </h4>
+  						<input class="c-input" type="text" name="dresscode">
+  						<h4 class="guestInline">Do you have a wishlist?</h4>
+              <div>
+  						  <input type="radio" name="wishlist" value="wish-yes">Yes
+                <input type="radio" name="wishlist" value="wish-no">No
+              </div>
+  						<h5><i>If you want, you can add links from Amazon.</i></h5>
+              <br>
+  						<input id="wishInput" class="c-input" type="text" name="item5" disabled>
+  						<div id="btn-add5" class="btn-add">
+  							<i class="fa fa-plus" aria-hidden="true"></i>
+  						</div>
+  						<ul class="ul-itemList" id="List5"></ul>
+              <br>
+  						<h4>More information for your guests: </h4>
+  						<textarea name="advancedInfo" id="text-guests" rows="5" cols="40"></textarea>
+            </div>
+          </div>
+          <div id="c-specials" class="specials createBasic">
+            <h4>specials</h4>
+          </div>
+          <div id="f-specials" class="createForms">
+            <div class="form-grid2">
+              <h5 class="listNote">
+  							<i>During developing this website, we probably forgot a bunch of stuff for urparty.<br>Here you can add your (shared) Spotify-Playlist and create own votings.</i>
+  						</h5>
+              <button type="button" id="fs-close" class="close-btn" name="button">Close</button>
+              <h3>Your (shared) Spotify-Playlist: </h3>
+  						<input class="c-input" type="url" name="spotPlaylist">
+              <h3>Here you can add your own votings:</h3>
+              <div>
+    						<div id="s-add" class="btn-add s-new">
+    							<i class="fa fa-plus" aria-hidden="true"></i>
+    						</div>
+    						<div id="s-delete" class="btn-add">
+    							<i class="fa fa-minus" aria-hidden="true"></i>
+    						</div>
+              </div>
+              <div id="s-votes"></div>
+
+            </div>
+          </div>
+          <div class="full-save">
+            <h2>After filling out every form, click on the button: </h2>
+            <button type="submit" name="fullsave-button" id="full-save-btn" value="fullsave" formmethod="post">Start urparty!</button>
+          </div>
+        </form>
+      </div>
+
+      <!-- Footer -->
+      <div class="foot">
+        <footer>
+      		<button id="info-button">i</button>
+      	</footer>
+      </div>
+      <div id="dialog-info">
+    		<h3>Welcome to urparty BETA.</h4>
+    		<br>
+    		<h4>Need help?</h3>
+    		<p>Write an email to: support@urparty.one</p>
+    		<br>
+    		<p>This website was made by:</p>
+    		<p>Philip Niebecker</p>
+    		<p>Jonas Wiegmann</p>
+    	</div>
+  </body>
+</html>

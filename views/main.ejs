@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <link rel="icon" type="image/ico" href="../assets/uplogorichtignice.ico"/>
+    <title>urparty</title>
+    <link href="https://fonts.googleapis.com/css?family=Anton|Courgette|Dosis" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+    <link rel="stylesheet" href="../assets/profile-style01.css">
+    <script
+    src="https://code.jquery.com/jquery-3.3.1.min.js"
+    integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+    crossorigin="anonymous"></script>
+    <script
+    src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"
+    integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU="
+    crossorigin="anonymous"></script>
+    <script src="../assets/info-toggle.js" charset="utf-8"></script>
+</head>
+<body>
+  <div class="grid">
+    <!-- Navbar  -->
+    <div class="nav">
+        <ul class="nav-grid">
+          <li class="left-grid">
+            <a href="/party/main">
+              <img id="landing-logo-super-small" src="../assets/urpartyfinal.svg" alt="">
+            </a>
+          </li>
+          <li class="center-grid">
+            <a href="/party/create">
+              <button type="button" name="button" class="save-button left-nav-btn">Create Party</button>
+            </a>
+          </li>
+          <li class="center-grid">
+            <a href="/party/join">
+              <button type="button" name="button" class="save-button right-nav-btn">Join Party</button>
+            </a>
+          </li>
+          <li class="right-grid">
+            <a href="/profile">
+              <% if(user.profileImg == undefined || user.profileImg == ""){ %>
+                <i class="fas fa-user-circle"></i>
+              <% } else{ %>
+                <img class="nav-profileImg" src="<%= user.profileImg %>" alt="Profile Image">
+              <% } %>
+            </a>
+          </li>
+        </ul>
+    </div>
+    <!-- Main -->
+    <div class="homeMainGrid">
+      <div class="invitedParties homePartyGrid">
+        <h2 class="partyTitles">Parties you are invited to:</h2>
+          <div class="partyCards">
+            <% for(var i=0; i < user.invitedParties.length; i++){ %>
+              <a href="/party/<%= user.invitedParties[i].id %>">
+                <div class="partyCard">
+                  <div class="partyCardImg">
+                    <%if(user.invitedParties[i].partyPicture == "") { %>
+                      <img class="partyPic" src="../assets/urpartyfinal.svg" alt="urpartyLogo">
+                    <% }else { %>
+                      <img class="partyPic" src="<%= user.invitedParties[i].partyPicture %>" alt="PartyPicture">
+                    <% } %>
+                  </div>
+                  <h4><%= user.invitedParties[i].title %></h4>
+                  <h4><%= user.invitedParties[i].date.toDateString() %></h4>
+                </div>
+              </a>
+            <% } %>
+          </div>
+      </div>
+      <div class="yourparties homePartyGrid">
+        <h2 class="partyTitles">Your Parties:</h2>
+        <div class="partyCards">
+          <% for(var i = 0; i < user.createdParties.length; i++){ %>
+            <a href="/party/<%= user.createdParties[i].id %>">
+              <div class="partyCard">
+                <div class="partyCardImg">
+                  <%if(user.createdParties[i].partyPicture == "") { %>
+                    <img class="partyPic" src="../assets/urpartyfinal.svg" alt="urpartyLogo">
+                  <% }else { %>
+                    <img class="partyPic" src="<%= user.createdParties[i].partyPicture %>" alt="PartyPicture">
+                  <% } %>
+                </div>
+                <h4><%= user.createdParties[i].title %></h4>
+                <h4><%= user.createdParties[i].date.toDateString() %></h4>
+              </div>
+            </a>
+          <% } %>
+        </div>
+      </div>
+    </div>
+
+    <div class="foot">
+      <footer>
+        <button id="info-button">i</button>
+      </footer>
+    </div>
+
+    <div id="dialog-info">
+  		<h3>Welcome to urparty BETA.</h4>
+  		<br>
+  		<h4>Need help?</h3>
+  		<p>Write an email to: support@urparty.one</p>
+  		<br>
+  		<p>This website was made by:</p>
+  		<p>Philip Niebecker</p>
+  		<p>Jonas Wiegmann</p>
+  	</div>
+  </body>
+</html>

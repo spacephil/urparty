@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <link rel="icon" type="image/ico" href="../assets/uplogorichtignice.ico"/>
+    <title><%= party.title %></title>
+    <link href="https://fonts.googleapis.com/css?family=Anton|Courgette|Dosis" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="../assets/profile-style01.css">
+    <script
+    src="https://code.jquery.com/jquery-3.3.1.min.js"
+    integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+    crossorigin="anonymous"></script>
+    <script
+    src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"
+    integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU="
+    crossorigin="anonymous"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+          $('#partyDelete').on('click', function(e){
+            console.log("pressed");
+             $.ajax({
+             type:'DELETE',
+             url: '/party/<%=party.id %>',
+             success: function(response){
+               alert('Deleting Party.');
+               window.location.href='/party/main';
+             },
+             error: function(err){
+               console.log(err);
+             }
+           });
+         });
+        });
+
+    </script>
+    <script src="../assets/info-toggle.js" charset="utf-8"></script>
+</head>
+<body>
+  <div class="grid">
+    <!-- Navbar  -->
+    <div class="nav">
+        <ul class="nav-grid">
+          <li class="left-grid">
+            <a href="/party/main">
+              <img id="landing-logo-super-small" src="../assets/urpartyfinal.svg" alt="">
+            </a>
+          </li>
+          <li class="center-grid">
+            <a href="/party/create">
+              <button type="button" name="button" class="save-button left-nav-btn">Create Party</button>
+            </a>
+          </li>
+          <li class="center-grid">
+            <a href="/party/join">
+              <button type="button" name="button" class="save-button right-nav-btn">Join Party</button>
+            </a>
+          </li>
+          <li class="right-grid">
+            <a href="/profile">
+              <% if(user.profileImg == undefined || user.profileImg == ""){ %>
+                <i class="fas fa-user-circle"></i>
+              <% } else{ %>
+                <img class="nav-profileImg" src="<%= user.profileImg %>" alt="Profile Image">
+              <% } %>
+            </a>
+          </li>
+        </ul>
+    </div>
+    <div class="partyMain">
+      <div class="party-grid">
+        <div class="partyInfo">
+          <% if(user.id == party.owner){ %>
+          <a href="/party/invitationcard/<%= party.id %>">
+            <button type="button" name="button" id="partyInvite" class="partyButton">Invite</button>
+          </a>
+          <div>
+            <form class="" action="/party/edit" method="post">
+              <button type="submit" name="button" id="partyEdit" class="partyButton" value="pEdit" disabled>Edit</button>
+            </form>
+            <button type="button" name="button" id="partyDelete" class="partyButton" value="pDelete" disabled>Delete</button>
+
+          </div>
+          <% } %>
+          <h1><%= party.title %></h1><br>
+          <h3>Date: <%= party.date.toDateString("DD-MM-YYYY") %></h3>
+          <h3>Start: <%= party.start %></h3>
+          <h3>Street: <%= party.street %></h3>
+          <h3>City: <%= party.city %></h3>
+          <h3>Occassion: <%= party.occassion %></h3>
+          <h3>Theme: <%= party.theme %></h3>
+          <h3>Entrence: <%= party.entrenceCost %></h3>
+          <br>
+          <div class="gridStretch">
+            <% for(var i=0; i< party.guestsList.length; i++){ %>
+              <div class="guestIcon">
+                <% if(party.guestsList[i].profileImg != "" || party.guestsList[i].profielImg != undefined) { %>
+                <img class="guestIconImg" src="<%= party.guestsList[i].profileImg %>" alt="Profile Image">
+                <% } else { %>
+                <img class="guestIconImg" src="../assets/specials.svg" alt="Profile Image">
+                <% } %>
+              </div>
+            <% } %>
+          </div>
+        </div>
+        <div class="partyFood">
+          <h1>Food</h1><br>
+          <h3>Food will be provided:</h3>
+          <h3><% if(party.provideFood == "provide"){ %>
+            Yes
+            <% }else { %>
+              No
+            <% } %>
+          </h3>
+          <div class="vote">
+            <h3>Provided Food:</h3>
+            <ul id="provFoodList" class="partyLists">
+              <% for(var i = 0; i< party.providedFood.length; i++){ %>
+                <li><%= party.providedFood[i] %></li>
+              <% } %>
+            </ul>
+          </div>
+          <div class="vote">
+            <h3>Food to bring:</h3>
+            <ul id="bringFoodList" class="partyLists">
+              <% for(var i = 0; i< party.broughtFood.length; i++){ %>
+                <li><%= party.broughtFood[i] %></li>
+              <% } %>
+            </ul>
+          </div>
+        </div>
+        <div class="partyDrinks">
+          <h1>Drinks</h1><br>
+          <h3>Drinks will be provided:</h3>
+          <h3><% if(party.provideDrinks == "provide"){ %>
+            Yes
+            <% }else { %>
+              No
+            <% } %>
+          </h3>
+          <div class="vote">
+            <h3>Provided Drinks:</h3>
+            <ul id="provDrinksList" class="partyLists">
+              <% for(var i = 0; i< party.providedDrinks.length; i++){ %>
+                <li><%= party.providedDrinks[i] %></li>
+              <% } %>
+            </ul>
+          </div>
+          <div class="vote">
+            <h3>Drinks to bring:</h3>
+            <ul id="bringDrinksList" class="partyLists">
+              <% for(var i = 0; i< party.broughtDrinks.length; i++){ %>
+                <li><%= party.broughtDrinks[i] %></li>
+              <% } %>
+            </ul>
+          </div>
+        </div>
+        <div class="partyGuests">
+          <h1>Guests</h1><br>
+          <h3>You are allowed to bring <%= party.plusGuest %> friends with you.</h3><br>
+          <h3>Dresscode: <%= party.dressCode %></h3>
+          <br>
+          <h3>There is <% if(party.wishlist == "wish-yes"){ %>
+             a
+            <% }else { %>
+             no
+            <% } %>
+            wishlist.
+          </h3><br>
+          <ul id="wishListParty" class="partyLists">
+            <% for(var i = 0; i< party.wishlistList.length; i++){ %>
+              <li><%= party.wishlistList[i] %></li>
+            <% } %>
+          </ul>
+          <br>
+          <h3>Additional info:</h3><br>
+          <h3 id="morePartyInfo"><%= party.moreInfo %></h3>
+        </div>
+        <div class="partySpecials">
+          <h1>Specials</h1><br>
+          <h3>The (shared) Playlist on Spotify for the party:</h3>
+          <a href="<%= party.spotifyPlaylist %>">
+            <button type="button" name="button" id="spotifyURIButton">Click</button>
+          </a>
+          <% for(var i = 0; i< party.vTopics.length; i++) { %>
+                <div class="vote">
+                  <h3><%= party.vTopics[i] %></h3>
+                  <ul class="partyLists">
+                    <% for(var j=i*4; j< (i+1)*4; j++) { %>
+                    <li><%= party.vAnswers[j] %></li>
+                    <% } %>
+                  </ul>
+                </div>
+          <% } %>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="foot">
+      <footer>
+        <button id="info-button">i</button>
+      </footer>
+    </div>
+    <div id="dialog-info">
+  		<h3>Welcome to urparty BETA.</h4>
+  		<br>
+  		<h4>Need help?</h3>
+  		<p>Write an email to: support@urparty.one</p>
+  		<br>
+  		<p>This website was made by:</p>
+  		<p>Philip Niebecker</p>
+  		<p>Jonas Wiegmann</p>
+  	</div>
+  </body>
+</html>
